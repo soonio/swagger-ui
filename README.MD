@@ -42,3 +42,20 @@ startretries=3
 stderr_logfile=/var/log/supervisor/swg-err.log
 stdout_logfile=/var/log/supervisor/swg-out.log
 ```
+
+## nginx代理
+
+```nginx configuration
+server {
+    listen 80;
+    server_name  swagger.domain-example.com;
+    client_max_body_size 10m;
+    
+    location / {
+    proxy_pass http://127.0.0.1:8009;
+    proxy_read_timeout 30s;
+    proxy_redirect off;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+```
