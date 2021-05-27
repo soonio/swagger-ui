@@ -1,0 +1,22 @@
+# HTTP Server
+[server]
+	Address         = ":8009"
+	ServerRoot      = "./"
+	ServerAgent     = "swagger"
+	LogPath         = "runtime/server"
+    dumpRouterMap   = false
+
+# Logger.
+[logger]
+    Path        = "runtime"
+    Level       = "all"
+    Stdout      = true
+
+[gfcli]
+    [gfcli.build]
+        name     = "swg"
+        arch     = "amd64"
+        system   = "linux"
+        pack     = "config"
+        mod      = ""
+        cgo      = 0
