@@ -8,7 +8,24 @@
 
 ```
 go mod tidy
-gf build 
+gf build main.go
+mv bin/linux_amd64/swg /var/www/matrix
+mv resource/index.html /var/www/matrix
+```
+
+## 目录结构
+```bash
+[root@localhost swagger]# tree
+.
+├── index.html
+├── runtime
+│   └── server
+│       └── 2021-05-26.log
+├── swagger
+│   └── swagger.json
+└── swg
+
+3 directories, 4 files
 ```
 
 ## 基于supervisor进程守护
