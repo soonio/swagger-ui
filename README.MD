@@ -7,7 +7,7 @@
 
 ## 快速使用
 
-- 配置nginx
+- 根据[模版配置](./nginx.conf)配置nginx
 - 把swagger生成的接口文件命名为项目名+环境名+json。如`project.env.json`
 - 把`project.env.json`放到docs目录下
 - 执行`./swag-ui`即可
