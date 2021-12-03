@@ -79,7 +79,7 @@ func main() {
 	}
 	defer template.Close()
 	all, err := ioutil.ReadAll(template)
-	content := strings.Replace(string(all), "{config-placeholder}", string(config), 1)
+	content := strings.Replace(string(all), "['ConfigPlaceholder']", string(config), 1)
 	err = ioutil.WriteFile("./page/index.html", []byte(content), 0644)
 	if err != nil {
 		fmt.Println(err.Error())

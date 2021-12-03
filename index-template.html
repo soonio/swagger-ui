@@ -8,25 +8,9 @@
     <link rel="icon" type="image/png" href="./favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="./favicon-16x16.png" sizes="16x16" />
     <style>
-      html
-      {
-        box-sizing: border-box;
-        overflow: -moz-scrollbars-vertical;
-        overflow-y: scroll;
-      }
-
-      *,
-      *:before,
-      *:after
-      {
-        box-sizing: inherit;
-      }
-
-      body
-      {
-        margin:0;
-        background: #fafafa;
-      }
+      html {box-sizing: border-box;overflow: -moz-scrollbars-vertical;overflow-y: scroll}
+      *, *:before, *:after {box-sizing: inherit}
+      body { margin:0; background: #fafafa}
     </style>
   </head>
 
@@ -39,7 +23,7 @@
   <script src="./swagger-ui-bundle.js"> </script>
   <script src="./swagger-ui-standalone-preset.js"> </script>
   <script>
-      let sites = {config-placeholder}
+      let sites = ['ConfigPlaceholder']
       window.onload = function() {
           let selectUrl = function(url) {
               window.ui = SwaggerUIBundle({
