@@ -39,7 +39,7 @@
 
         let prefix = document.location.origin
         sites.map((v) => {
-            v.url = prefix + v.url.replace('./', "")
+            v.url = prefix + "/" + v.url.replace('./', "")
             return v
         })
 
