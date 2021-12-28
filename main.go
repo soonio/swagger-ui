@@ -1,90 +1,44 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
+	"github.com/urfave/cli/v2"
+	"log"
+	"net/http"
 	"os"
-	"strings"
-	"time"
 )
-
-var (
-	envMap = map[string]string{
-		"test": "测试",
-		"prev": "预发",
-		"prod": "生产",
-	}
-	docsDir = "./docs"
-)
-
-type swaggerJson struct {
-	Info struct {
-		Title   string `json:"title"`
-		Version string `json:"version"`
-	} `json:"info"`
-}
 
 func main() {
-	// 扫描docs中的文件
-	fis, err := ioutil.ReadDir(docsDir)
+	app := &cli.App{
+		Name:        "Swagger UI",
+		Usage:       "simple swagger json preview.",
+		Description: "预览多个swagger json文件",
+		Commands: []*cli.Command{
+			{
+				Name:  "serve",
+				Usage: "启动web服务器",
+				Action: func(context *cli.Context) error {
+					http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("page"))))
+					http.Handle("/docs/", http.StripPrefix("/docs/", http.FileServer(http.Dir("docs"))))
+					err := http.ListenAndServe(":8080", nil)
+					if err != nil {
+						log.Println(err)
+					}
+					return nil
+				},
+			},
+			{
+				Name:  "init",
+				Usage: "初始化",
+				Action: func(context *cli.Context) error {
+					Init()
+					return nil
+				},
+			},
+		},
+	}
+
+	err := app.Run(os.Args)
 	if err != nil {
-		fmt.Println("当前目录不存在docs目录")
+		log.Fatal(err)
 	}
-
-	var data []map[string]string
-	for _, fi := range fis {
-		fn := fi.Name()
-		if !fi.IsDir() && strings.HasSuffix(fn, ".json") {
-			np := "未知"
-			for env, name := range envMap {
-				if strings.Contains(fn, env) {
-					np = name
-					break
-				}
-			}
-			dir := fmt.Sprintf("%s/%s", docsDir, fn)
-			file, err := os.Open(dir)
-			if err != nil {
-				break
-			}
-
-			all, err := ioutil.ReadAll(file)
-			if err != nil {
-				_ = file.Close()
-				break
-			} else {
-				_ = file.Close()
-			}
-
-			var sj swaggerJson
-			err = json.Unmarshal(all, &sj)
-			if err != nil {
-				break
-			}
-
-			data = append(data, map[string]string{
-				"name": fmt.Sprintf("[%s]%s-%s", np, sj.Info.Title, sj.Info.Version),
-				"url":  dir,
-			})
-
-		}
-	}
-	config, _ := json.Marshal(data)
-	// 依次读取docs文件中的json，解析出title和文件名，生成map
-	template, err := os.Open("./index-template.html")
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	defer template.Close()
-	all, err := ioutil.ReadAll(template)
-	content := strings.Replace(string(all), "['ConfigPlaceholder']", string(config), 1)
-	err = ioutil.WriteFile("./page/index.html", []byte(content), 0644)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-	fmt.Printf("[%s] 🐶 init success.\n", time.Now().Format("2006-01-02 15:04:05"))
-	os.Exit(0)
 }
