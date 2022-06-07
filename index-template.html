@@ -81,6 +81,7 @@
         });
         items.onchange = function () {
             let valOption = this.options[this.selectedIndex].value
+            history.pushState({title: "", url: window.location.url}, '', "?url=" + encodeURIComponent(valOption))
             selectUrl(valOption)
         }
     }

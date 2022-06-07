@@ -25,6 +25,16 @@
   go build -o swag-ui main.go
   ```
 
+## 开发
+  - 初始化
+  ```bash
+  go run . init
+  ```
+  - 运行
+  ```bash
+  go run . serve
+  ```
+
 ## 说明
 
   - page目录下的文件来自[swagger-api/swagger-ui](https://github.com/swagger-api/swagger-ui/releases) v4
