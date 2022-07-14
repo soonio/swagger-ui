@@ -46,4 +46,4 @@
 
 ## Sponsor
 
-  Thank [JetBrain](https://jb.gg/OpenSourceSupport)
+  Thank [JetBrains](https://jb.gg/OpenSourceSupport)
