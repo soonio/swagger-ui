@@ -43,3 +43,7 @@
 
 - 优化配置
 - 优化切换的select框
+
+## Sponsor
+
+  Thank [JetBrain](https://jb.gg/OpenSourceSupport)
