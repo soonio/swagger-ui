@@ -22,7 +22,7 @@
 - 重新编译swag-ui命令
 
   ```
-  go build -o swag-ui main.go
+  go build -ldflags "-s -w" -trimpath -o swag-ui .
   ```
 
 ## 开发
