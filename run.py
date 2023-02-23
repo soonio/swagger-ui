@@ -17,7 +17,7 @@ for x in files:
             break
     with open(filename, 'r') as f:
         data = json.load(f)
-        one['name'] = '[{env}]{title}-{version}'.format(env=np, title=data.get('info').get('version'), version=data.get('info').get('title'))
+        one['name'] = '[{env}]{title}-{version}'.format(env=np, title=data.get('info').get('title'), version=data.get('info').get('version'))
         one['url'] = filename
 
         # "name": fmt.Sprintf("[%s]%s-%s", np, sj.Info.Title, sj.Info.Version),
