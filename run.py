@@ -10,14 +10,19 @@ for x in files:
     if not os.path.isfile(filename) or not x.endswith('.json'):
         continue
     one = {}
+    np = "未知"
     for e in envs:
         if e in x:
-            one['env'] = envs.get(e)
+            np = envs.get(e)
             break
     with open(filename, 'r') as f:
         data = json.load(f)
-        one['title'] = data.get('info').get('title')
-        one['version'] = data.get('info').get('version')
+        one['name'] = '[{env}]{title}-{version}'.format(env=np, title=data.get('info').get('version'), version=data.get('info').get('title'))
+        one['url'] = filename
+
+        # "name": fmt.Sprintf("[%s]%s-%s", np, sj.Info.Title, sj.Info.Version),
+        # "url": filename,
+
         f.close()
 
     config.append(one)
