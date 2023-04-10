@@ -19,17 +19,10 @@ for x in files:
         data = json.load(f)
         one['name'] = '[{env}]{title}-{version}'.format(env=np, title=data.get('info').get('title'), version=data.get('info').get('version'))
         one['url'] = filename
-
-        # "name": fmt.Sprintf("[%s]%s-%s", np, sj.Info.Title, sj.Info.Version),
-        # "url": filename,
-
         f.close()
 
     config.append(one)
 
-with open('./index-template.html') as template:
-    content = template.read().replace("['ConfigPlaceholder']", json.dumps(config, ensure_ascii=False))
-    template.close()
-    with open("./page/index.html", 'w+') as index:
-        index.write(content)
-        index.close()
+with open("./page/custom.json", 'w+') as index:
+    index.write(json.dumps(config, ensure_ascii=False))
+    index.close()

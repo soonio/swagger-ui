@@ -1,0 +1,4 @@
+[
+  {"name": "[测试]swagger-ui示例-1.0", "url": "./docs/example.test.json"},
+  {"name": "官方样例", "url": "https://petstore.swagger.io/v2/swagger.json"}
+]
