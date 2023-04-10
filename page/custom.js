@@ -1,4 +1,12 @@
 window.onload = function () {
+
+  const body = document.getElementById('swagger-ui').parentElement
+  const wrap = document.createElement('div', {})
+  wrap.style.backgroundColor = '#1f1f1f'
+  wrap.innerHTML = '<label for="api-select"></label><select id="api-select"></select>'
+  body.appendChild(wrap)
+
+
   const sites = fetch('./custom.json?t=' + (new Date().valueOf())).then(r => r.json()).then(sites => {
     let items = document.getElementById('api-select');
     sites.forEach(site => {
