@@ -25,6 +25,14 @@
     - 引入custom.js
     - 引入custom.css
 
+## 其他
+  - 如果需要禁用右下角的校验功能，可以修改custom.js
+  
+    ```js
+    SwaggerUIBundle({
+        validatorUrl: null
+      })
+    ```
 
 
 ## Sponsor
