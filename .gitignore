@@ -2,3 +2,6 @@
 */.DS_Store
 docs
 custom.json
+swagger
+go.sum
+Makefile

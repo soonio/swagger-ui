@@ -2,16 +2,21 @@ package main
 
 import (
 	"bytes"
+	"embed"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"io"
+	"io/fs"
 	"net/http"
 	"os"
 	"strings"
 	"sync"
 )
+
+//go:embed static
+var static embed.FS
 
 var secret = flag.String("secret", "swagger-pass", "Secret to authenticate with")
 
@@ -28,7 +33,14 @@ func main() {
 		return c.Redirect(302, "/swagger/")
 	})
 
-	e.Static("/swagger/*", "static")
+	fsys, err := fs.Sub(static, "static")
+	if err != nil {
+		panic(err)
+	}
+
+	e.File("/swagger/", "index.html")
+	e.GET("/swagger/*", echo.WrapHandler(http.StripPrefix("/static/", http.FileServer(http.FS(fsys)))))
+	//e.Static("/swagger/*", "static")
 	e.Static("/docs/*", "docs")
 	e.POST("/upload", Upload)
 	e.GET("/refresh", func(c echo.Context) error {
@@ -155,7 +167,7 @@ func refresh(logger echo.Logger) {
 	buffer.WriteString(options)
 	buffer.Write(part2)
 
-	err = os.WriteFile("static/index.html", buffer.Bytes(), 0644)
+	err = os.WriteFile("index.html", buffer.Bytes(), 0644)
 	if err != nil {
 		logger.Error(err)
 	}
