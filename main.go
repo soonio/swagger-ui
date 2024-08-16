@@ -23,9 +23,24 @@ var port = flag.String("port", "8900", "端口")
 
 var locker sync.Mutex
 
-func main() {
+func init() {
 	_ = os.Mkdir("docs", 0777)
+	_, err := os.Stat("index.html")
+	if err != nil {
+		if !os.IsNotExist(err) {
+			panic(err)
+		}
+		var buffer bytes.Buffer
+		buffer.Write(part1)
+		buffer.Write(part2)
+		err = os.WriteFile("index.html", buffer.Bytes(), 0644)
+		if err != nil {
+			panic(err)
+		}
+	}
+}
 
+func main() {
 	flag.Parse()
 
 	e := echo.New()
@@ -130,7 +145,7 @@ func list(c echo.Context) error {
 			}
 		}
 	}
-	return c.JSON(http.StatusOK, options)
+	return c.JSONPretty(http.StatusOK, options, "    ")
 }
 
 func refresh(logger echo.Logger) {
