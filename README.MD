@@ -7,7 +7,7 @@
 curl -F "file=@docs/example.test.json" \
     -F "filename=ttt.json" \
     -F "secret=password" \
-    http://localhost:8934/upload 
+    http://localhost:8900/upload
 ```
 
 ### 简单启动

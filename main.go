@@ -18,7 +18,8 @@ import (
 //go:embed static
 var static embed.FS
 
-var secret = flag.String("secret", "swagger-pass", "Secret to authenticate with")
+var secret = flag.String("secret", "password", "Secret to authenticate with")
+var port = flag.String("port", "8900", "端口")
 
 var locker sync.Mutex
 
@@ -39,7 +40,7 @@ func main() {
 	}
 
 	e.File("/swagger/", "index.html")
-	e.GET("/swagger/*", echo.WrapHandler(http.StripPrefix("/static/", http.FileServer(http.FS(fsys)))))
+	e.GET("/swagger/*", echo.WrapHandler(http.StripPrefix("/swagger/", http.FileServer(http.FS(fsys)))))
 	//e.Static("/swagger/*", "static")
 	e.Static("/docs/*", "docs")
 	e.POST("/upload", Upload)
@@ -50,7 +51,7 @@ func main() {
 
 	e.GET("list", list)
 
-	e.Logger.Fatal(e.Start(":8934"))
+	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", *port)))
 
 }
 
@@ -157,7 +158,7 @@ func refresh(logger echo.Logger) {
 					continue
 				}
 
-				options += fmt.Sprintf(`{url: "%s", name: "%s-%s"},`, fmt.Sprintf("/docs/%s", d.Name()), s.Info.Title, s.Info.Version)
+				options += fmt.Sprintf("{url: \"%s\", name: \"%s-%s\"},\n                ", fmt.Sprintf("/docs/%s", d.Name()), s.Info.Title, s.Info.Version)
 			}
 		}
 	}
@@ -195,8 +196,7 @@ var part1 = []byte(`
         window.ui = SwaggerUIBundle({
             urls: [
                 `)
-var part2 = []byte(`
-                {url: "https://petstore.swagger.io/v2/swagger.json", name: "官方样例"}
+var part2 = []byte(`{url: "https://petstore.swagger.io/v2/swagger.json", name: "官方样例"}
             ],
             dom_id: '#swagger-ui',
             deepLinking: true,
