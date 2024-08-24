@@ -44,6 +44,8 @@ func main() {
 	flag.Parse()
 
 	e := echo.New()
+	e.HideBanner = true
+	//e.HidePort = true
 
 	e.GET("/", func(c echo.Context) error {
 		return c.Redirect(302, "/swagger/")
@@ -57,7 +59,13 @@ func main() {
 	e.File("/swagger/", "index.html")
 	e.GET("/swagger/*", echo.WrapHandler(http.StripPrefix("/swagger/", http.FileServer(http.FS(fsys)))))
 	//e.Static("/swagger/*", "static")
-	e.Static("/docs/*", "docs")
+	e.Group("", func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			c.Response().Header().Set("Cache-Control", "no-cache")
+			c.Response().Header().Set("Pragma", "no-cache")
+			return next(c)
+		}
+	}).Static("/docs/*", "docs")
 	e.POST("/upload", Upload)
 	e.GET("/refresh", func(c echo.Context) error {
 		refresh(c.Logger())
