@@ -8,7 +8,9 @@ CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -ldflags "-s -w" -trimpath -o sw
 CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -ldflags "-s -w" -trimpath -o swagger-darwin-arm64 main.go
 ```
 
-## ⚠️ 因为资源是使用的相对目录加载的，所以服务启动的时候，要在项目所在目录启动，不然会会出现not found问题。比如使用systemd进程守护，要使用workdir来说明运行的位置
+## ⚠️ 注意事项
+
+    因为资源是使用的相对目录加载的，所以服务启动的时候，要在项目所在目录启动，不然会会出现not found问题。比如使用systemd进程守护，要使用workdir来说明运行的位置
 
 ## 使用
 
