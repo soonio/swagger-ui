@@ -15,7 +15,8 @@ curl -F "file=@docs/example.test.json" \
 ### 基于Docker运行
 
 ```bash
-docker run 
+docker pull soonio/swagger-hub:1.0
+docker run -d --name swagger -p 81:8934 soonio/swagger-hub:1.0
 ```
 
 ### 推送到HUB
