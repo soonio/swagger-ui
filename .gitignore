@@ -1,10 +1,3 @@
 .idea
-*/.DS_Store
-docs
-custom.json
-swagger
-go.sum
-Makefile
-index.html
-
-swagger-*
+.DS_Store
+node_modules
