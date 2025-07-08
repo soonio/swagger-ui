@@ -1,7 +1,12 @@
 # swagger-ui
 
+### 快速开始
 ```bash
-./swagger-darwin-arm64 -secret 123456 -port 8900
+npm install
+
+npm start
+
+npm start -- --secret 123456 --port 8900
 ```
 
 ### 快速上传本地文件到目标服务
