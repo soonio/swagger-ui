@@ -7,6 +7,7 @@ npm install
 npm start
 
 npm start -- --secret 123456 --port 8900
+node server.js --secret 123456 --port 8900
 ```
 
 ### 快速上传本地文件到目标服务
@@ -21,7 +22,7 @@ curl -F "file=@docs/example.test.json" \
 
 ```bash
 docker pull soonio/swagger-hub:1.0
-docker run -d --name swagger -p 81:8934 soonio/swagger-hub:1.0
+docker run -d --name swagger -p 81:8934 -e PORT=8934 -e SECRET=123456 -v /api-docs-dir:/app/public/docs soonio/swagger-hub:1.0
 ```
 
 ### 推送到HUB
